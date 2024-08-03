@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "es2021",
+    "lib": ["es2021"],
+    "outDir": "./dist",
+    "module": "CommonJS",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "declaration": false,
+    "strictNullChecks": true,
+  },
+  "reflection": true,
+  "include": ["./src"],
+  "exclude": ["./dist"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}

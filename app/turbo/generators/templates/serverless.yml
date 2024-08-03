@@ -1,0 +1,62 @@
+service: {{camelCase name}}
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+  - serverless-domain-manager
+  - serverless-latest-layer-version
+
+custom:
+  esbuild: 
+    exclude: 
+      - aws-sdk
+    packager: pnpm
+    bundle: true
+    minify: false
+    sourcemap: true
+    target: "node20"
+    platform: "node"
+    concurrency: 10
+  serverless-offline:
+    useChildProcesses: true
+    httpPort: 4000
+  stage: ${opt:stage, self:provider.stage}
+  domains:
+    prod: api.hotkey.sh
+    staging: staging-api.hotkey.sh
+    dev: dev-api.hotkey.sh
+  customDomain:
+    basePath: {{dashCase name}}
+    domainName: ${self:custom.domains.${self:custom.stage}}
+    stage: $default # https://github.com/amplify-education/serverless-domain-manager/issues/612
+    createRoute53Record: true
+    # hostedZoneId: 
+    endpointType: REGIONAL
+    securityPolicy: tls_1_2
+    apiType: http
+  stages:
+    - dev
+    - staging
+    - prod
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ap-northeast-2
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "*"
+      Resource: "*"
+  stage: ${opt:stage,'dev'}
+  environment:
+    STAGE: ${self:provider.stage}
+
+functions:
+  TemplatesAction: 
+    handler: dist/{{camelCase name}}.handler
+    timeout: 29
+    memorySize: 128
+    events:
+      - httpApi:
+          path: /action/{{dashCase name}}
+          method: post

@@ -1,0 +1,5 @@
+{
+  "extends": "@lib/tsconfig/base.json",
+  "include": ["src/**/*.ts", "serverless.ts"],
+  "exclude": ["node_modules"]
+}
