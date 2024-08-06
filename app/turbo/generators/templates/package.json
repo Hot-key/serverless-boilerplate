@@ -4,12 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@mana/function": "workspace:*",
-    "@mana/sls-hasura": "workspace:*"
+    "@lib/function": "workspace:*",
+    "@lib/sls-hasura": "workspace:*"
   },
   "devDependencies": {
     "eslint": "^8.36.0",
-    "@mana/tsconfig": "workspace:*"
+    "@lib/tsconfig": "workspace:*"
   },
   "scripts": {
     "build": "tsc",
